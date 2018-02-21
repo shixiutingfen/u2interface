@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="GBK"?>
+<project name="u2s_recog" default="main" basedir=".">
+	<property name="proj.name" value="u2s_recog" />
+	<property name="proj.version" value="V1.0.0" />
+	<property name="proj.src" value="${basedir}/src" />
+	<property name="proj.webroot" value="${basedir}/WebContent" />
+	<property name="lib.dir" value="${proj.webroot}/WEB-INF/lib" />
+	<property name="j2eelib.dir" value="D:\tomcat\apache-tomcat-8.5.23\lib" />
+
+	<property name="build.dir" value="D:/ant" />
+	<property name="build.proj.dir" value="${build.dir}/${proj.name}" />
+	<property name="build.war.dir" value="${build.proj.dir}/war" />
+	<property name="build.zip.dir" value="${build.proj.dir}/zip" />
+	<property name="build.class.dir" value="${build.proj.dir}/classes" />
+
+	<property name="complite.name" value="u2s_recog_${proj.version}" />
+	
+	<!-- 编译所需的JAR环境 -->
+	<path id="lib.path.id">
+		<fileset dir="${lib.dir}" >
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${j2eelib.dir}" >
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- <target name="main" depends="prepare,compile-src,war,war2zip,sendZipToFTP,deploy,clear" /> -->
+	<target name="main" depends="prepare,compile-src,war,war2zip,java-srouce" />
+
+	<target name="prepare">
+		<delete dir="${build.proj.dir}" />
+
+		<mkdir dir="${build.war.dir}" />
+		<mkdir dir="${build.zip.dir}" />
+		<mkdir dir="${build.class.dir}" />
+
+		<echo message="=====本次构建项目信息如下=====" />
+		<echo message="-----[项目名字]project.name           : ${proj.name}" />
+		<echo message="-----[版本号码]project.version        : ${proj.version} " />
+		<echo message="----------------------------------------------------------------" />
+	</target>
+
+	<target name="compile-src">
+		<echo message="开始编译代码......" />
+		<javac encoding="utf-8" srcdir="${proj.src}"  destdir="${build.class.dir}" 
+			classpathref="lib.path.id" 
+			includeantruntime="true" 
+			debug="true" nowarn="on" source="1.8" target="1.8" fork="true" memoryMaximumSize="512m">
+		</javac>
+		<copy todir="${build.class.dir}">
+			<fileset dir="${basedir}/resource">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		<echo message="编译成功......" />
+		<echo message="代码编译完成......" />
+	</target>
+
+	<target name="war"  unless="!webroot.exist" description="--> make a war file for this project">
+		<delete file="${build.war.dir}/${complite.name}.war" failonerror="true" />
+		<echo message="开始打War包......" />
+		<war destfile="${build.war.dir}/${complite.name}.war" webxml="${proj.webroot}/WEB-INF/web.xml">
+			<fileset dir="${proj.webroot}">
+				<include name="**/*.*" />
+				<exclude name="**/*Test*.*" />
+				<exclude name="**/*test*.*" />
+				<exclude name="**/*test*/**" />
+				<exclude name="**/*Test*/**" />
+			</fileset>
+			<!--<lib dir="${lib.dir}" includes="*.*"/>-->
+			<classes dir="${build.class.dir}" />
+		</war>
+		<echo message="打War包结束......" />
+	</target>
+
+	<target name="war2zip" description=" 创建WEBEAR发布包 ">
+		<delete file="${build.zip.dir}/${complite.name}.zip" failonerror="true" />
+		<echo message="开始打包zip格式安装介质......" />
+
+		<zip destfile="${build.zip.dir}/${complite.name}.zip">
+			<!-- 
+				<zipfileset dir="${WebRoot.dir}" prefix="/" />
+				<zipfileset dir="." includes="ChangeLog27.txt" fullpath="docs/ChangeLog.txt" />
+				 -->
+			<zipfileset src="${build.war.dir}/${complite.name}.war" includes="**/*.*" prefix="ROOT" />
+		</zip>
+
+		<echo message="打包zip格式安装介质结束......" />
+	</target>
+	
+	<target name="java-srouce" description=" 创建WEBEAR发布包 ">
+		<delete file="${build.zip.dir}/${complite.name}-source.zip" failonerror="true" />
+		<echo message="开始对源码进行打包zip格式......" />
+
+		<zip destfile="${build.zip.dir}/${complite.name}-source.zip" >
+			<zipfileset dir="${basedir}" prefix="${proj.name}">
+				<include name="resource/*.*" />
+				<include name="src/**" />
+				<include name="WebContent/**" />
+				<include name="buildVersion.xml" />
+				<include name="version.info" />
+			</zipfileset>
+		</zip>
+
+		<echo message="对源码进行打包zip格式结束......" />
+	</target>
+
+</project>
+

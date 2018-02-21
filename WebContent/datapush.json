@@ -1,0 +1,16 @@
+{
+	"switch" : false,
+	"converse" : {
+		"classpath" : "cn.jiuling.recog.sendmsg.converse.impl.DataConverseFenghuo"
+	},
+	"push" : {
+		"classpath" : "cn.jiuling.recog.sendmsg.protocol.impl.SendProtocolHttpNormal",
+		"urlPerson" : "http://192.168.0.132:8080/httptest/receive",
+		"urlBike" : "http://192.168.0.132:8080/httptest/receive",
+		"urlCar" : "http://192.168.0.132:8080/httptest/receive"
+	},
+	"feature" : {
+		"classpath" : "cn.jiuling.recog.sendmsg.feature.impl.FeatureHandlerKafka",
+		"topicFeature" : "feature"
+	}
+}

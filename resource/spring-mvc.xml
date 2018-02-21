@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/task
+    	http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<!-- 扫描controller（controller层注入） -->
+	<context:component-scan base-package="cn.jiuling.web.controller" />
+	<!-- 扫描自动任务（task层注入） -->
+	<context:component-scan base-package="cn.jiuling.web.task" />
+ 	<!-- 避免IE执行ajax时，返回json出现下载文件 -->
+	<bean id="mappingJacksonHttpMessageConverter"
+	        class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	        <property name="supportedMediaTypes">
+	            <list>
+	                <value>text/html;charset=UTF-8</value>
+	            </list>
+	        </property>
+	    </bean> 
+	
+	    <!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
+	    <bean
+	        class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	        <property name="messageConverters">
+	            <list>
+	                <!-- json转换器 -->
+	                <ref bean="mappingJacksonHttpMessageConverter" />
+	            </list>
+	        </property>
+	    </bean>
+	<!-- 对模型视图添加前后缀 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/views/" p:suffix=".jsp" />
+
+	<!-- 配置springMVC处理上传文件的信息 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="10485760000" />
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+	<!-- task任务扫描注解 -->
+	<task:annotation-driven scheduler="scheduler"
+		mode="proxy" />
+	<task:scheduler id="scheduler" pool-size="10" />
+</beans>

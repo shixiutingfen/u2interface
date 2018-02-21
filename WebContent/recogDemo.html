@@ -1,0 +1,467 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="application/json; charset=utf-8"/>
+<script language="JavaScript" src="jquery-1.11.0.min.js"></script>
+<title>u2s接口测试  目前仅支持post方法</title>
+</head>
+
+<style>
+	.wrap-info{
+		border: 1px solid #ccc;
+	    padding: 5px;
+	    overflow: auto;
+	    height: 109px;
+	    width:85%;
+	    border-radius: 8px;
+	}
+	.info-title{
+	border-bottom:1px solid #ddd;
+	margin-bottom:15px;
+	padding-bottom:10px;
+	}
+	.url-info{
+	word-break: break-word;
+	margin-bottom:5px;
+	}
+	.data-info,.response-info{
+	word-break: break-word;
+	}
+	.url-info>span.title,.data-info>span.title,.response-info>span.title{
+	font-weight: bold;
+    margin-right: 8px;
+	}
+	.url-info>div,.data-info>div,.response-info>div{}
+	table.info-table>tbody>tr>td{
+	    border-bottom: 1px solid #ddd;
+	    padding-bottom: 10px;
+    	padding-top: 10px;
+	}
+	.post-btn{
+	    padding: 5px 14px;
+	    border-radius: 4px;
+	    color: #fff;
+	    background-color: #5bc0de;
+	    border-color: #46b8da;
+    }
+</style>
+
+
+<body>
+	<table class="info-title" width="100%">
+		<tr>
+			<td style="color:red">*ip</td>
+			<td><input type="text" name="" id="ip" value="127.0.0.1"></td>
+			
+			<td style="color:red">*port</td>
+			<td><input type="text" name="" id="port" value="20280"></td>
+			
+			<td><div style="color:red">温馨提示: *号表示必填，此demo仅供调用参考，详情以接口文档为准！</div></td>
+		</tr>
+		
+		<!-- 添加结构化任务  start  -->
+		<tr>
+			<table class="info-table" width="100%">
+				<tr>
+					<td height="33%" width="33%">
+						<table id="addVideoObjextTask_param" style="width: 100%;">
+							<tr>
+								1.添加结构化任务
+							</tr>
+							<tr>
+								<td width="40%"><div style="color:red">*serialnumber</div></td>
+								<td width="60%"><input type="text" name="" id="addVideoObjextTask_serialnumber"></td>
+							</tr>
+							<tr>
+								<td><div style="color:red">*url</div></td>
+								<td><input type="text" name="" id="addVideoObjextTask_url"></td>
+							</tr>
+						</table>
+					</td>
+					
+					<td width="7%">
+						<button class="post-btn" type="button" value="POST" onclick="addVideoObjextTask();">POST</button>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="url-info"><span class="title">url:</span><div id="addVideoObjextTask_request_url"></div></div>
+							<div class="data-info"><span class="title">postdata:</span><div id="addVideoObjextTask_request_data"></div></div>
+						</div>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="response-info"><span class="title">response:</span><div id="addVideoObjextTask_response"></div></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</tr>
+		<!-- 添加结构化任务  end  -->
+		
+		<!-- 查询结构化任务  start  -->
+		<tr>
+			<table class="info-table" width="100%">
+				<tr>
+					<td height="33%" width="33%">
+						<table id="getVideoObjectTaskList_param" style="width: 100%;">
+							<tr>
+								2.查询结构化任务
+							</tr>
+							<tr>
+								<td width="40%"><div style="color:red">*serialnumber</div></td>
+								<td width="60%"><input type="text" name="" id="getVideoObjectTaskList_serialnumber"></td>
+							</tr>
+						</table>
+					</td>
+					
+					<td width="7%">
+						<button class="post-btn" type="button" value="POST" onclick="getVideoObjectTaskList();">POST</button>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="url-info"><span class="title">url:</span><div id="getVideoObjectTaskList_request_url"></div></div>
+							<div class="data-info"><span class="title">postdata:</span><div id="getVideoObjectTaskList_request_data"></div></div>
+						</div>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="response-info"><span class="title">response:</span><div id="getVideoObjectTaskList_response"></div></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</tr>
+		<!-- 查询结构化任务  end  -->
+		
+		<!-- 暂停实时任务  start  -->
+		<tr>
+			<table class="info-table" width="100%">
+				<tr>
+					<td height="33%" width="33%">
+						<table id="pauseVideoObjectTask_param" style="width: 100%;">
+							<tr>
+								3.暂停实时任务
+							</tr>
+							<tr>
+								<td width="40%"><div style="color:red">*serialnumber</div></td>
+								<td width="60%"><input type="text" name="" id="pauseVideoObjectTask_serialnumber"></td>
+							</tr>
+						</table>
+					</td>
+					
+					<td width="7%">
+						<button class="post-btn" type="button" value="POST" onclick="pauseVideoObjectTask();">POST</button>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="url-info"><span class="title">url:</span><div id="pauseVideoObjectTask_request_url"></div></div>
+							<div class="data-info"><span class="title">postdata:</span><div id="pauseVideoObjectTask_request_data"></div></div>
+						</div>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="response-info"><span class="title">response:</span><div id="pauseVideoObjectTask_response"></div></div>
+						</div>
+					</td>
+					
+				</tr>
+			</table>
+		</tr>
+		<!-- 暂停实时任务  end  -->
+		
+		<!-- 继续实时任务  start  -->
+		<tr>
+			<table class="info-table" width="100%">
+				<tr>
+					<td height="33%" width="33%">
+						<table style="width: 100%;">
+							<tr>
+								4.继续实时任务
+							</tr>
+							<tr>
+								<td width="40%"><div style="color:red">*serialnumber</div></td>
+								<td width="60%"><input type="text" name="" id="continueVideoObjectTask_serialnumber"></td>
+							</tr>
+						</table>
+					</td>
+					
+					<td width="7%">
+						<button class="post-btn" type="button" value="POST" onclick="continueVideoObjectTask();">POST</button>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="url-info"><span class="title">url:</span><div id="continueVideoObjectTask_request_url"></div></div>
+							<div class="data-info"><span class="title">postdata:</span><div id="continueVideoObjectTask_request_data"></div></div>
+						</div>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="response-info"><span class="title">response:</span><div id="continueVideoObjectTask_response"></div></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</tr>
+		<!-- 继续实时任务  end  -->
+		
+		<!-- 删除结构化任务  start  -->
+		<tr>
+			<table class="info-table" width="100%">
+				<tr>
+					<td height="33%" width="33%">
+						<table style="width: 100%;">
+							<tr>
+								5.删除结构化任务
+							</tr>
+							<tr>
+								<td width="40%"><div style="color:red">*serialnumber</div></td>
+								<td width="60%"><input type="text" name="" id="deleteVideoObjectTask_serialnumber"></td>
+							</tr>
+						</table>
+					</td>
+					
+					<td width="7%">
+						<button class="post-btn" type="button" value="POST" onclick="deleteVideoObjectTask();">POST</button>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="url-info"><span class="title">url:</span><div id="deleteVideoObjectTask_request_url"></div></div>
+							<div class="data-info"><span class="title">postdata:</span><div id="deleteVideoObjectTask_request_data"></div></div>
+						</div>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="response-info"><span class="title">response:</span><div id="deleteVideoObjectTask_response"></div></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</tr>
+		<!-- 删除结构化任务  end  -->
+		
+		<!-- 图片特征提取  start  -->
+		<tr>
+			<table class="info-table" width="100%">
+				<tr>
+					<td height="33%" width="33%">
+						<table style="width: 100%;">
+							<tr>
+								6.图片特征提取
+							</tr>
+							<tr>
+								<td width="40%"><div style="color:red">*objtype</div></td>
+								<td width="60%"><input type="text" name="" id="extractFromPicture_objtype"></td>
+							</tr>
+							<tr>
+								<td width="40%"><div style="color:red">*picture<div style="font-size:13px;">(data:image/jpeg;base64,请去掉)</div></div></td>
+								<!-- <td><input type="text" name="" id="extractFromPicture_picture"></td> -->
+								<td width="60%"><textarea rows="3" cols="22" id="extractFromPicture_picture"></textarea></td>
+							</tr>
+						</table>
+					</td>
+					
+					<td width="7%">
+						<button class="post-btn" type="button" value="POST" onclick="extractFromPicture();">POST</button>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="url-info"><span class="title">url:</span><div id="extractFromPicture_request_url"></div></div>
+							<div class="data-info"><span class="title">postdata:</span><div id="extractFromPicture_request_data"></div></div>
+						</div>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="response-info"><span class="title">response:</span><div id="extractFromPicture_response"></div></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</tr>
+		<!-- 删除结构化任务  end  -->
+		
+		<!-- 新增智慧交通路口任务  start  -->
+		<tr>
+			<table class="info-table" width="100%">
+				<tr>
+					<td height="33%" width="33%">
+						<table style="width: 100%;">
+							<tr>
+								7.新增智慧交通路口任务
+							</tr>
+							<tr>
+								<td width="40%"><div style="color:red">*serialnumber</div></td>
+								<td width="60%"><input type="text" name="" id="addTrafficTask_serialnumber"></td>
+							</tr>
+							<tr>
+								<td width="40%"><div style="color:red">*param</div></td>
+								<td width="60%"><textarea rows="3" cols="22" id="addTrafficTask_param"></textarea></td>
+							</tr>
+						</table>
+					</td>
+					
+					<td width="7%">
+						<button class="post-btn" type="button" value="POST" onclick="addTrafficTask();">POST</button>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="url-info"><span class="title">url:</span><div id="addTrafficTask_request_url"></div></div>
+							<div class="data-info"><span class="title">postdata:</span><div id="addTrafficTask_request_data"></div></div>
+						</div>
+					</td>
+					
+					<td width="30%">
+						<div class="wrap-info">
+							<div class="response-info"><span class="title">response:</span><div id="addTrafficTask_response"></div></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</tr>
+		<!-- 新增智慧交通路口任务    end  -->
+		
+</table>
+
+<script type="text/javascript">
+
+function post(target,postData)
+{   
+	var ip = $("#ip").val();
+	var port = $("#port").val();
+	
+	var reqURL ="";
+	if(target == "extractFromPicture"){
+		reqURL = 'http://'+ip+':'+port+'/rest/feature/'+target;
+	}else{
+		reqURL = 'http://'+ip+':'+port+'/rest/taskManage/'+target;
+	}
+	 
+	var reqParamUrl = reqURL;
+	var reqParamData = postData;
+	$("#"+target+"_request_url").html(reqParamUrl);
+	$("#"+target+"_request_data").html(reqParamData);
+	var xml = new XMLHttpRequest(); 
+	 
+	//xml.open('POST', reqURL, false); 
+
+	//xml.setRequestHeader("Content-type","application/x-www-form-urlencoded"); 
+	/* xml.onreadystatechange = function(){
+        // alert(xml.readyState);
+        if(xml.readyState==4){
+            if(xml.status==200||xml.status==304){
+				//alert("sucess 200");
+                var data = xml.responseText;
+                $("#"+target+"_response").text(data);
+            }
+        }
+     }
+	xml.send(postData);  */
+	
+}   
+
+function addVideoObjextTask()
+{
+	//添加离线任务（带感兴趣区域相关参数）
+	//var postData = 'q={"serialnumber":8888888888,'+
+	//				  '"type":"objext","param":{"entryTime":"2017-12-21 12:00:00","interestedSetting": {"isInterested": true,"udrNum": 1,"udrVertices": {"vertices":[0.30625,0.17777,0.296875,0.6,0.5890625,0.6055,0.6609375,0.1555],"verticesNum":4}}},'+
+	//				   '"output":{"type":"kafka","topic":"test"},'+
+	//				   '"url":"file///home/video/3559939495.avi"}';
+	
+	//添加离线任务（没有感兴趣区域）
+	//var postData = 'q={"serialnumber":9999999999,'+
+	//				   '"type":"objext","param":{"entryTime":"2017-12-12 12:00:00"},'+
+	//				   '"output":{"type":"kafka","topic":"test"},'+
+	//				   '"url":"ftp://chiwailam:sdfa123!@192.168.0.142/3559939495.avi"}';
+	
+	//添加实时任务 （没有感兴趣区域）
+	var serialnumber = $("#addVideoObjextTask_serialnumber").val().trim();
+	var url = $("#addVideoObjextTask_url").val().trim();
+	var postData = '{"serialnumber":"'+serialnumber+'",'+
+					   '"type":"objext",'+
+					   //'"output":{"type":"kafka","topic":"test"},'+
+					   '"url":"'+url+'"}';
+	//alert(postData);
+	post("addVideoObjextTask",postData);
+	
+}
+
+function addTrafficTask()
+{
+	
+	//添加
+	var serialnumber = $("#addTrafficTask_serialnumber").val().trim();
+	var param = $("#addTrafficTask_param").val().trim();
+	var postData = '{"serialnumber":"'+serialnumber+'",'+
+					   '"type":"objext",'+
+					   //'"output":{"type":"kafka","topic":"test"},'+
+					   '"param":'+param+'}';
+	//alert(postData);
+	//console.log(postData);
+	post("addTrafficTask",postData);
+	
+}
+
+function deleteVideoObjectTask()
+{
+	var serialnumber = $("#deleteVideoObjectTask_serialnumber").val().trim();
+	var postData = '{"serialnumber":"'+serialnumber+'"}';
+	post("deleteVideoObjectTask",postData);
+}
+
+function getVideoObjectTaskList()
+{
+	
+	var serialnumber = $("#getVideoObjectTaskList_serialnumber").val().trim();
+	
+	//带任务序列号查询
+	var postData = '{"serialnumber":"'+serialnumber+'"}';
+			
+	//带其他参数查询
+	<!-- var postData = 'q={"startTime":"2017-01-01 00:00:01",'+ -->
+					<!-- '"endTime":"2017-01-01 23:59:59",'+ -->
+					<!-- '"type":"objext",'+ -->
+					<!-- '"status":"1",'+ -->
+					<!-- '"pageNo":"1",'+ -->
+					<!-- '"pageSize":"10"}'; -->
+	post("getVideoObjectTaskList",postData);
+}
+
+function pauseVideoObjectTask()
+{
+	var serialnumber = $("#pauseVideoObjectTask_serialnumber").val().trim();
+	var postData = '{"serialnumber":"'+serialnumber+'"}';
+	post("pauseVideoObjectTask",postData);
+}
+
+function continueVideoObjectTask()
+{
+	var serialnumber = $("#continueVideoObjectTask_serialnumber").val().trim();
+	var postData = '{"serialnumber":"'+serialnumber+'"}';
+	post("continueVideoObjectTask",postData);
+}
+
+function extractFromPicture(){
+	var objtype = $("#extractFromPicture_objtype").val().trim();
+	var picture = $("#extractFromPicture_picture").val().trim();
+	var postData = '{"objtype":"'+objtype+'","picture":"'+picture+'"}';
+	<!-- var postData = '{"objtype":"'+objtype+'","picture":"'+picture+'"}'; -->
+	post("extractFromPicture",postData);
+}
+
+String.prototype.trim = function() { 
+	return this.replace(/\s+/g, ""); 
+}
+</script>
+</body>
+</html>

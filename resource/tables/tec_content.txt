@@ -1,0 +1,6 @@
+titleid,string,not_analyzed
+contentid,string,not_analyzed
+title,string,analyzed
+content,string,analyzed
+parentid,integer,not_analyzed
+titletype,integer,not_analyzed

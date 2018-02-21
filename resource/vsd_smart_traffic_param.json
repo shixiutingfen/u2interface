@@ -1,0 +1,73 @@
+{
+	"url": "file:///u2s/transcode/www/upload/3982181474.avi",
+	"custom": {
+		"outputToKafka": {
+			"broker": "10.101.214.71:9092,10.101.214.73:9092,10.101.214.74:9092",
+			"topic": "my-replicated-topic0"
+		},
+		"direction": "0",
+		"locationId": "23544346767"
+	},
+	"trafficStatusIntervalInSec": 5,
+	"customSession": 2,
+	"customSessionDuraInMin": [
+		5,
+		15
+	],
+	"laneCount": 2,
+	"lane": {
+		"udrNum": 1,
+		"isInterested": true,
+		"udrVertices": [
+			{
+				"vertices": [
+					0.284375,
+					0.5137222290039063,
+					0.140625,
+					0.9720555623372396,
+					0.8109375,
+					0.9303888956705729,
+					0.6671875,
+					0.5303888956705729
+				],
+				"verticesNum": 4
+			}
+		]
+	},
+	"light": {
+		"udrNum": 1,
+		"isInterested": true,
+		"udrVertices": [
+			{
+				"vertices": [
+					0.5046875,
+					0,
+					0.528125,
+					0.06927777396308052,
+					0.5609375,
+					0.019277777936723497
+				],
+				"verticesNum": 3
+			}
+		]
+	},
+	"sidewalk": {
+		"udrNum": 1,
+		"isInterested": true,
+		"udrVertices": [
+			{
+				"vertices": [
+					0.0421875,
+					0.3720555623372396,
+					0.0109375,
+					0.49983334011501734,
+					0.734375,
+					0.5109444512261285,
+					0.7109375,
+					0.36372222900390627
+				],
+				"verticesNum": 4
+			}
+		]
+	}
+}
