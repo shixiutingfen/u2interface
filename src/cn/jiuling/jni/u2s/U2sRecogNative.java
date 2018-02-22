@@ -22,7 +22,7 @@ public class U2sRecogNative
         }
     }
     
-    public native int Init(String sdkParam);
+    public native int Init(String sdkParam); 
 
     public native byte[] GetFeature(int objType, byte[] picture);
     
